@@ -12,7 +12,7 @@ import shutil
 import string
 import threading
 import warnings
-from ema_workbench.em_framework.samplers import AbstractSampler, sample_jointly
+from ema_workbench.em_framework.samplers import AbstractSampler#, sample_jointly
 from ..util import EMAError, get_module_logger, ema_logging
 from .util import NamedObjectMap, determine_objects
 from .salib_samplers import (SobolSampler, MorrisSampler, FASTSampler)
