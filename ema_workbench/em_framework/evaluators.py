@@ -12,6 +12,8 @@ import shutil
 import string
 import threading
 import warnings
+from tqdm import autonotebook
+from datetime import datetime
 from ema_workbench.em_framework.samplers import AbstractSampler#, sample_jointly
 from ..util import EMAError, get_module_logger, ema_logging
 from .util import NamedObjectMap, determine_objects
@@ -229,9 +231,11 @@ class SequentialEvaluator(BaseEvaluator):
         cwd = os.getcwd()
         runner = ExperimentRunner(models)
 
-        for experiment in ex_gen:
-            outcomes = runner.run_experiment(experiment)
-            callback(experiment, outcomes)
+        with autonotebook.tqdm(total = scenarios.n) as pbar:
+            for experiment in ex_gen:
+                outcomes = runner.run_experiment(experiment)
+                callback(experiment, outcomes)
+                pbar.update()
         runner.cleanup()
         os.chdir(cwd)
 
