@@ -13,6 +13,7 @@ import time
 import shutil
 import traceback
 import queue
+import tqdm
 
 from ..util import get_module_logger, ema_logging
 from .experiment_runner import ExperimentRunner
@@ -231,9 +232,11 @@ class ExperimentFeeder(threading.Thread):
         self.daemon = True
 
     def run(self):
-        for experiment in self.experiments:
-            result = self.pool.apply_async(worker, [experiment])
-            self.results_queue.put(result)
+        with tqdm.tqdm(total = 100) as pbar:
+            for experiment in self.experiments:
+                result = self.pool.apply_async(worker, [experiment])
+                self.results_queue.put(result)
+                pbar.update()
 
 
 class ResultsReader(threading.Thread):

@@ -103,10 +103,10 @@ class AbstractCallback(object):
         # yes:
         # https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook
         self.i += 1
-        _logger.debug(str(self.i) + " cases completed")
-
-        if self.i % self.reporting_interval == 0:
-            _logger.info(str(self.i) + " cases completed")
+        # _logger.debug(str(self.i) + " cases completed")
+        #
+        # if self.i % self.reporting_interval == 0:
+        #     _logger.info(str(self.i) + " cases completed")
 
     @abc.abstractmethod
     def get_results(self):
@@ -224,7 +224,7 @@ class DefaultCallback(AbstractCallback):
             try:
                 outcome_res = outcomes[outcome.name]
             except KeyError:
-                message = f"{outcome.name} not specified as outcome in msi" 
+                message = f"{outcome.name} not specified as outcome in msi"
                 _logger.debug(message)
             else:
                 try:
